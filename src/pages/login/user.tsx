@@ -1,24 +1,38 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const UserLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("User login submitted!");
 
     try {
-      const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+      const response = await fetch("http://localhost:5000/api/users/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
 
       const data = await response.json();
-      console.log("Response from API:", data);
+
+      if (response.ok) {
+        console.log("✅ Login successful:", data);
+
+        // Save username to localStorage for use in Form
+        localStorage.setItem("username", data.user.username);
+
+        // Navigate to complaint form page
+        navigate("/form");
+      } else {
+        alert("❌ " + data.message);
+      }
     } catch (err) {
       console.error("Login failed:", err);
+      alert("❌ Network or server error.");
     }
   };
 
@@ -35,6 +49,7 @@ const UserLogin = () => {
               onChange={(e) => setUsername(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter username"
+              required
             />
           </div>
           <div>
@@ -45,6 +60,7 @@ const UserLogin = () => {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter password"
+              required
             />
           </div>
           <button

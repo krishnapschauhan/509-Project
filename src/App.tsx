@@ -8,6 +8,7 @@ import UserLogin from "./pages/login/user";
 import AdminLogin from "./pages/login/admin";
 import WorkerLogin from "./pages/login/worker"; 
 import UserRegister from "./pages/register/user";
+import Form from "./pages/Form";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/login/admin" element={<AdminLogin />} />  
           <Route path="/login/worker" element={<WorkerLogin />} /> 
           <Route path="/register/user" element={<UserRegister />} /> 
+          <Route path="/form" element={<Form />} />
           </Routes>
       </BrowserRouter>
     </TooltipProvider>

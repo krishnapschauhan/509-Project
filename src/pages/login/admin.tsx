@@ -3,22 +3,34 @@ import React, { useState } from "react";
 const AdminLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
+    setSuccess("");
     console.log("Admin login submitted!");
 
     try {
-      const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+      const response = await fetch("http://localhost:5000/api/admin/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
 
       const data = await response.json();
-      console.log("Response from API:", data);
+
+      if (response.ok) {
+        console.log("Response from API:", data);
+        setSuccess("Login successful!");
+        // TODO: Navigate to dashboard or set session
+      } else {
+        setError(data.message || "Login failed");
+      }
     } catch (err) {
       console.error("Login failed:", err);
+      setError("Server error. Please try again.");
     }
   };
 
@@ -47,6 +59,8 @@ const AdminLogin = () => {
               placeholder="Enter password"
             />
           </div>
+          {error && <p className="text-red-600 text-sm">{error}</p>}
+          {success && <p className="text-green-600 text-sm">{success}</p>}
           <button
             type="submit"
             className="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 rounded-md"

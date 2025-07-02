@@ -39,7 +39,7 @@ const Index = () => {
       <Header />
       <Hero />
 
-      {/* Issue Types Section */}
+
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -77,7 +77,8 @@ const Index = () => {
           </div>
         </div>
       </section>
-{/* Portal Selection Section */}
+
+
 <section className="py-20 bg-gradient-to-r from-blue-50 to-indigo-50">
   <div className="container mx-auto px-4">
     <div className="text-center mb-12">
@@ -87,7 +88,7 @@ const Index = () => {
 
     <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto text-center">
 
-      {/* User Card */}
+
       <div className="bg-white rounded-2xl p-8 shadow-md border hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group">
         <div className="flex flex-col items-center">
           <div className="bg-blue-100 text-blue-600 p-4 rounded-full mb-4">
@@ -113,7 +114,7 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Admin Card */}
+
       <div className="bg-white rounded-2xl p-8 shadow-md border hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group">
         <div className="flex flex-col items-center">
           <div className="bg-purple-100 text-purple-600 p-4 rounded-full mb-4">
@@ -133,7 +134,6 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Worker Card */}
       <div className="bg-white rounded-2xl p-8 shadow-md border hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group">
         <div className="flex flex-col items-center">
           <div className="bg-yellow-100 text-yellow-600 p-4 rounded-full mb-4">
@@ -157,7 +157,6 @@ const Index = () => {
 </section>
 
 
-{/* How Base Care Works Section */}
 <section className="py-20 bg-white">
   <div className="container mx-auto px-4">
     <div className="text-center mb-16">
@@ -167,10 +166,10 @@ const Index = () => {
       </p>
     </div>
 
-    {/* Timeline Flow */}
+
     <div className="relative flex flex-col md:flex-row items-center justify-between max-w-5xl mx-auto">
       
-      {/* Step 1 */}
+      
       <div className="flex flex-col items-center text-center mb-10 md:mb-0 md:w-1/3 px-4">
         <div className="bg-blue-100 p-4 rounded-full mb-4 text-blue-600">
           <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -182,10 +181,10 @@ const Index = () => {
         <p className="text-gray-600 text-sm">Users easily report issues via online form</p>
       </div>
 
-      {/* Connector */}
+      
       <div className="hidden md:block w-1/6 border-t-2 border-dashed border-gray-300"></div>
 
-      {/* Step 2 */}
+      
       <div className="flex flex-col items-center text-center mb-10 md:mb-0 md:w-1/3 px-4">
         <div className="bg-yellow-100 p-4 rounded-full mb-4 text-yellow-600">
           <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -198,10 +197,9 @@ const Index = () => {
         <p className="text-gray-600 text-sm">Admin reviews and assigns to the appropriate worker</p>
       </div>
 
-      {/* Connector */}
+      
       <div className="hidden md:block w-1/6 border-t-2 border-dashed border-gray-300"></div>
 
-      {/* Step 3 */}
       <div className="flex flex-col items-center text-center md:w-1/3 px-4">
         <div className="bg-green-100 p-4 rounded-full mb-4 text-green-600">
           <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -216,8 +214,7 @@ const Index = () => {
   </div>
 </section>
 
-      {/* Footer */}
-      <footer className="bg-black py-10 text-white mt-auto">
+       <footer className="bg-black py-10 text-white mt-auto">
         <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
           <div className="text-center md:text-left mb-6 md:mb-0">
             <h3 className="text-2xl font-bold">Base Care</h3>
