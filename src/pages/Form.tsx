@@ -54,7 +54,6 @@ const Form = () => {
       >
         <h2 className="text-3xl font-bold text-center text-gray-800">Submit a Complaint</h2>
 
-        {/* Username (autofilled) */}
         <input
           type="text"
           name="username"
@@ -63,7 +62,6 @@ const Form = () => {
           className="w-full border p-3 rounded-lg bg-gray-100 text-gray-600 cursor-not-allowed"
         />
 
-        {/* Category */}
         <div>
           <label className="block text-gray-700 font-medium mb-1">Category</label>
           <select
@@ -79,7 +77,6 @@ const Form = () => {
           </select>
         </div>
 
-        {/* Location */}
         <div>
           <label className="block text-gray-700 font-medium mb-1">Location in Base</label>
           <input
@@ -93,7 +90,6 @@ const Form = () => {
           />
         </div>
 
-        {/* Landmark */}
         <div>
           <label className="block text-gray-700 font-medium mb-1">Nearby Landmark</label>
           <input
@@ -106,7 +102,6 @@ const Form = () => {
           />
         </div>
 
-        {/* Urgency */}
         <div>
           <label className="block text-gray-700 font-medium mb-1">Urgency</label>
           <div className="flex gap-6">
@@ -126,7 +121,6 @@ const Form = () => {
           </div>
         </div>
 
-        {/* Description */}
         <div>
           <label className="block text-gray-700 font-medium mb-1">Description</label>
           <textarea
@@ -140,7 +134,6 @@ const Form = () => {
           ></textarea>
         </div>
 
-        {/* Submit */}
         <button
           type="submit"
           className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"

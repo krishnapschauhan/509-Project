@@ -5,11 +5,11 @@ const { Pool } = require("pg");
 
 const app = express();
 
-// Middlewares
+
 app.use(cors());
 app.use(bodyParser.json());
 
-// PostgreSQL Pool Setup
+
 const pool = new Pool({
   user: "postgres",
   host: "localhost",
@@ -18,7 +18,7 @@ const pool = new Pool({
   port: 5432,
 });
 
-// DB Connection Test
+
 pool.query("SELECT NOW()", (err, res) => {
   if (err) {
     console.error("❌ DB connection failed:", err);
@@ -27,13 +27,13 @@ pool.query("SELECT NOW()", (err, res) => {
   }
 });
 
-// Root route
+
 app.get("/", (req, res) => {
   res.send("✅ Server is up and running!");
 });
 
 
-// ✅ USER REGISTRATION
+
 app.post("/api/users/register", async (req, res) => {
   const { username, password } = req.body;
 
@@ -58,7 +58,7 @@ app.post("/api/users/register", async (req, res) => {
 });
 
 
-// ✅ USER LOGIN
+// USER LOGIN
 app.post("/api/users/login", async (req, res) => {
   const { username, password } = req.body;
 
@@ -84,7 +84,7 @@ app.post("/api/users/login", async (req, res) => {
 });
 
 
-// ✅ SUBMIT COMPLAINT
+//  SUBMIT COMPLAINT
 app.post("/api/complaints", async (req, res) => {
   const { username, category, location, landmark, urgency, description } = req.body;
 
@@ -110,8 +110,87 @@ app.post("/api/complaints", async (req, res) => {
   }
 });
 
+// ADMIN LOGIN (Hardcoded)
+const ADMIN_USERNAME = "admin";
+const ADMIN_PASSWORD = "admin1234";
 
-// ✅ Start Server
+app.post("/api/admin/login", (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({ message: "Username and password required" });
+  }
+
+  if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+    return res.status(200).json({ message: "Admin login successful" });
+  } else {
+    return res.status(401).json({ message: "Invalid admin credentials" });
+  }
+});
+
+//Get All Complaints
+
+app.get("/api/admin/complaints", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM complaint ORDER BY id DESC");
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error("❌ Error fetching complaints:", err);
+    res.status(500).json({ message: "Failed to fetch complaints" });
+  }
+});
+
+// Get All Workers
+app.get("/api/admin/workers", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM workers ORDER BY id");
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error("❌ Error fetching workers:", err);
+    res.status(500).json({ message: "Failed to fetch workers" });
+  }
+});
+
+
+// Assign Worker to Complaint
+app.post("/api/admin/assign", async (req, res) => {
+  const { complaintId, workerName } = req.body;
+
+  try {
+    await pool.query(
+      `UPDATE complaint SET assigned_worker = $1, status = 'Assigned' WHERE id = $2`,
+      [workerName, complaintId]
+    );
+    await pool.query(
+      `UPDATE workers SET available = false WHERE name = $1`,
+      [workerName]
+    );
+    res.status(200).json({ message: "Worker assigned successfully" });
+  } catch (err) {
+    console.error("❌ Error assigning worker:", err);
+    res.status(500).json({ message: "Assignment failed" });
+  }
+});
+
+// Mark Complaint as Successful
+app.post("/api/admin/mark-success", async (req, res) => {
+  const { complaintId } = req.body;
+
+  try {
+    await pool.query(
+      `UPDATE complaint SET status = 'Successful' WHERE id = $1`,
+      [complaintId]
+    );
+    res.status(200).json({ message: "Complaint marked as successful" });
+  } catch (err) {
+    console.error("❌ Error updating complaint status:", err);
+    res.status(500).json({ message: "Update failed" });
+  }
+});
+
+
+
+//Server Setup
 const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`✅ Server running on http://localhost:${PORT}`);

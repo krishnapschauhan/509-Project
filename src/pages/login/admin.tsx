@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AdminLogin = () => {
   const [username, setUsername] = useState("");
@@ -6,11 +7,12 @@ const AdminLogin = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  const navigate = useNavigate();
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setSuccess("");
-    console.log("Admin login submitted!");
 
     try {
       const response = await fetch("http://localhost:5000/api/admin/login", {
@@ -22,9 +24,12 @@ const AdminLogin = () => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log("Response from API:", data);
+        localStorage.setItem("isAdminLoggedIn", "true"); // ✅ Save login status
         setSuccess("Login successful!");
-        // TODO: Navigate to dashboard or set session
+        console.log("Response from API:", data);
+
+        // 👇 Redirect to dashboard
+        setTimeout(() => navigate("/admindashboard"), 1000);
       } else {
         setError(data.message || "Login failed");
       }
