@@ -1,13 +1,25 @@
-import { NavLink } from "react-router-dom";
-import { Home, FileText, Search, Info } from "lucide-react";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import { Home, FileText, Search, Info, LogOut } from "lucide-react";
 
 const Header = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const navItems = [
     { name: "Home", path: "/", icon: Home },
-    { name: "Report an Issue", path: "/report", icon: FileText },
+    { name: "Report an Issue", path: "/form", icon: FileText },
     { name: "Report Status", path: "/status", icon: Search },
-    { name: "About Us", path: "/about", icon: Info },
   ];
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
+  };
+
+  // Check if user is logged in (you can replace "user" with "token" or any key you use)
+  const isLoggedIn = !!localStorage.getItem("user");
+  const showLogout =
+    isLoggedIn && ["/form", "/admindashboard"].includes(location.pathname);
 
   return (
     <header className="bg-black text-white">
@@ -21,6 +33,7 @@ const Header = () => {
               Discipline. Report. Resolve.
             </p>
           </div>
+
           <div className="flex flex-wrap justify-center gap-4">
             {navItems.map((item) => (
               <NavLink
@@ -40,6 +53,29 @@ const Header = () => {
                 </div>
               </NavLink>
             ))}
+
+            {/* Show Logout only if user is logged in and on specific paths */}
+            {showLogout ? (
+              <button
+                onClick={handleLogout}
+                className="group relative px-5 py-2 rounded-full font-semibold transition-all duration-300 text-gray-300 hover:text-white hover:bg-white/10 backdrop-blur-sm border border-white/20"
+              >
+                <div className="flex items-center space-x-2">
+                  <LogOut className="w-4 h-4" />
+                  <span className="text-sm">Logout</span>
+                </div>
+              </button>
+            ) : (
+              <NavLink
+                to="/about"
+                className="group relative px-5 py-2 rounded-full font-semibold transition-all duration-300 text-gray-300 hover:text-white hover:bg-white/10 backdrop-blur-sm border border-white/20"
+              >
+                <div className="flex items-center space-x-2">
+                  <Info className="w-4 h-4" />
+                  <span className="text-sm">About Us</span>
+                </div>
+              </NavLink>
+            )}
           </div>
         </div>
       </nav>

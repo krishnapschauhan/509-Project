@@ -19,7 +19,7 @@ const UserRegister = () => {
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem("username", username); // store user
+        localStorage.setItem("username", username); 
         alert("✅ Registration successful!");
         navigate("/form"); // redirect to complaint form
       } else {
